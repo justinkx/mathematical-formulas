@@ -1,0 +1,324 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0",
+    "title": "react-native chat rest-api",
+    "description": "A minimal nodejs express mongoose powered backend for a chat app in React-Native",
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "produces": [
+    "application/json"
+  ],
+  "tags": [
+    {
+      "name": "Authentication",
+      "description": "User authentication for login and generating JW token"
+    },
+    {
+      "name": "Users",
+      "description": "Everything about Users"
+    },
+    {
+      "name": "Channels",
+      "description": "Everything about channels"
+    },
+    {
+      "name": "Messages",
+      "description": "Everything about message"
+    }
+  ],
+  "schemes": [
+    "http"
+  ],
+  "securityDefinitions": {
+    "authentication": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header"
+    }
+  },
+  "paths": {
+    "/message": {
+      "post": {
+        "tags": [
+          "Messages"
+        ],
+        "description": "Insert message",
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "message",
+            "in": "formData",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "createdBy",
+            "in": "formData",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "channelId",
+            "in": "formData",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "security": [
+          {
+            "authentication": []
+          }
+        ],
+        "responses": {}
+      },
+      "get": {
+        "tags": [
+          "Messages"
+        ],
+        "description": "get all message",
+        "security": [
+          {
+            "authentication": []
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/message/{id}": {
+      "delete": {
+        "tags": ["Messages"],
+        "description": "Delete a message",
+        "produces":[
+          "application/json",
+          "application/xml"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "security": [
+          {
+            "authentication": []
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/message/{channelId}": {
+      "get": {
+        "tags": [
+          "Messages"
+        ],
+        "description": "messages associated with a channel",
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "channelId",
+            "in": "path",
+            "type": "string",
+            "required": true,
+            "default": "5ce793d80910cf06247984d6"
+          }
+        ],
+        "security": [
+          {
+            "authentication": []
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/user": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "description": "get all users",
+        "produces": [
+          "application/json",
+          "application/xml"
+        ],
+        "security": [{
+          "authentication": []
+        }],
+        "responses": {}
+      }
+    },
+    "/user/authenticate": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "description": "Authenticate User",
+        "produces": [
+          "application/json",
+          "application/xml"
+        ],
+        "parameters": [
+          {
+            "name": "email",
+            "in": "formData",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "password",
+            "in": "formData",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/user/register": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "description": "New user Registration",
+        "produces": [
+          "application/json",
+          "application/xml"
+        ],
+        "parameters": [
+          {
+            "name": "firstName",
+            "in": "formData",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "lastName",
+            "in": "formData",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "email",
+            "in": "formData",
+            "type": "string",
+            "format": "email",
+            "required": true
+          },
+          {
+            "name": "password",
+            "in": "formData",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "mobileNumber",
+            "in": "formData",
+            "type": "number",
+            "required": true
+          },
+          {
+            "name": "channels",
+            "in": "formData",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }],
+        "responses": {}
+      }
+    },
+    "/user/{userId}": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "description": "get users of given id",
+        "produces": [
+          "application/json",
+          "application/xml"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "security": [
+          {
+            "authentication": []
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/channel": {
+      "get": {
+        "tags": [
+          "Channels"
+        ],
+        "description": "Get list of all channels",
+        "produces": [
+          "application/json",
+          "application/xml"
+        ],
+        "security": [
+          {
+            "authentication": []
+          }
+        ],
+        "responses": {}
+      },
+      "post": {
+        "tags": [
+          "Channels"
+        ],
+        "description": "Create new channel",
+        "produces": [
+          "application/json",
+          "application/xml"
+        ],
+        "parameters": [
+          {
+            "name": "createdBy",
+            "in": "formData",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "name",
+            "in": "formData",
+            "type": "string"
+          },
+          {
+            "name": "users",
+            "in": "formData",
+            "type": "array",
+            "required": true,
+            "items": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "authentication": []
+          }
+        ],
+        "responses": {}
+      }
+    }
+  }
+}
