@@ -12,9 +12,10 @@ async function createCategory(categoryParams) {
     return await newCategory.save();
 }
 
-async function updateCategory(categoryId,name) {
+async function updateCategory(categoryId,param) {
     const Category = await Categories.findById(categoryId);
-    Category.name = name;
+    if (!Category) throw `Category ?${categoryId} not found`;
+    Category.name = param.name;
     return await Category.save();
 }
 module.exports = {

@@ -18,7 +18,11 @@ app.use(cors());
 // use JWT auth to secure the api
 
 
-
+// if(process.env.NODE_ENV === "production"){
+//     app.use('/docs', (req, res, next) => {
+//       res.status(404).send("Not Found");
+//     });
+// }
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use(jwt());
 

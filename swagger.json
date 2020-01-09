@@ -199,6 +199,36 @@
           }],
         "responses": {}
       }
+    },
+    "/post/categories/{categoryId}": {
+      "post": {
+        "tags": [
+          "Authenticated Apis"
+        ],
+        "description": "Update Category of given id",
+        "security": [{
+          "authentication": []
+        }],
+        "parameters": [
+          {
+            "name": "categoryId",
+            "in": "path",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "name",
+            "in": "formData",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "produces": [
+          "application/json",
+          "application/xml"
+        ],
+        "responses": {}
+      }
     }
   }
 }
