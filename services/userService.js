@@ -6,8 +6,8 @@ const User = require('../models/User');
 
 async function authenticate({ email, password }) {
     const user = await User.findOne({ email });
-    if (user && bcrypt.compareSync(password, user.hash)) {
-        const { hash, ...userWithoutHash } = user.toObject();
+    if (user && bcrypt.compareSync(password, user.password)) {
+        const { password, ...userWithoutHash } = user.toObject();
         const token = jwt.sign({ sub: user.id }, config.secret,{
             expiresIn: '24h'
         });
@@ -19,11 +19,11 @@ async function authenticate({ email, password }) {
 }
 
 async function getAll() {
-    return await User.find().select('-hash');
+    return await User.find().select('-password');
 }
 
 async function getById(id) {
-    return await User.findById(id).select('-hash');
+    return await User.findById(id).select('-password');
 }
 
 async function create(userParam) {
@@ -41,6 +41,7 @@ async function create(userParam) {
 
     // save user
     const createdUser = await user.save();
+    delete createdUser.password;
     return {
 		message: 'User created successfully ...',
 		user: createdUser

@@ -16,22 +16,11 @@
     {
       "name": "Authentication",
       "description": "User authentication for login and generating JW token"
-    },
-    {
-      "name": "Users",
-      "description": "Everything about Users"
-    },
-    {
-      "name": "Channels",
-      "description": "Everything about channels"
-    },
-    {
-      "name": "Messages",
-      "description": "Everything about message"
     }
   ],
   "schemes": [
-    "http"
+    "http",
+    "https"
   ],
   "securityDefinitions": {
     "authentication": {
@@ -41,107 +30,6 @@
     }
   },
   "paths": {
-    "/message": {
-      "post": {
-        "tags": [
-          "Messages"
-        ],
-        "description": "Insert message",
-        "produces": [
-          "application/xml",
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "message",
-            "in": "formData",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "createdBy",
-            "in": "formData",
-            "type": "string",
-            "required": true
-          },
-          {
-            "name": "channelId",
-            "in": "formData",
-            "type": "string",
-            "required": true
-          }
-        ],
-        "security": [
-          {
-            "authentication": []
-          }
-        ],
-        "responses": {}
-      },
-      "get": {
-        "tags": [
-          "Messages"
-        ],
-        "description": "get all message",
-        "security": [
-          {
-            "authentication": []
-          }
-        ],
-        "responses": {}
-      }
-    },
-    "/message/{id}": {
-      "delete": {
-        "tags": ["Messages"],
-        "description": "Delete a message",
-        "produces":[
-          "application/json",
-          "application/xml"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "type": "string",
-            "required": true
-          }
-        ],
-        "security": [
-          {
-            "authentication": []
-          }
-        ],
-        "responses": {}
-      }
-    },
-    "/message/{channelId}": {
-      "get": {
-        "tags": [
-          "Messages"
-        ],
-        "description": "messages associated with a channel",
-        "produces": [
-          "application/xml",
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "channelId",
-            "in": "path",
-            "type": "string",
-            "required": true,
-            "default": "5ce793d80910cf06247984d6"
-          }
-        ],
-        "security": [
-          {
-            "authentication": []
-          }
-        ],
-        "responses": {}
-      }
-    },
     "/user": {
       "get": {
         "tags": [
@@ -226,14 +114,6 @@
             "in": "formData",
             "type": "number",
             "required": true
-          },
-          {
-            "name": "channels",
-            "in": "formData",
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
           }],
         "responses": {}
       }
@@ -254,62 +134,6 @@
             "in": "path",
             "type": "string",
             "required": true
-          }
-        ],
-        "security": [
-          {
-            "authentication": []
-          }
-        ],
-        "responses": {}
-      }
-    },
-    "/channel": {
-      "get": {
-        "tags": [
-          "Channels"
-        ],
-        "description": "Get list of all channels",
-        "produces": [
-          "application/json",
-          "application/xml"
-        ],
-        "security": [
-          {
-            "authentication": []
-          }
-        ],
-        "responses": {}
-      },
-      "post": {
-        "tags": [
-          "Channels"
-        ],
-        "description": "Create new channel",
-        "produces": [
-          "application/json",
-          "application/xml"
-        ],
-        "parameters": [
-          {
-            "name": "createdBy",
-            "in": "formData",
-            "type": "string",
-            "required": true
-          },
-          {
-            "name": "name",
-            "in": "formData",
-            "type": "string"
-          },
-          {
-            "name": "users",
-            "in": "formData",
-            "type": "array",
-            "required": true,
-            "items": {
-              "type": "string"
-            }
           }
         ],
         "security": [
