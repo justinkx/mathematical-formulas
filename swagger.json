@@ -16,6 +16,14 @@
     {
       "name": "Authentication",
       "description": "User authentication for login and generating JW token"
+    },
+    {
+      "name": "Un-Authenticated Apis",
+      "description": "Apis Open To All Users"
+    },
+    {
+      "name": "Authenticated Apis",
+      "description": "Apis Open To Admin"
     }
   ],
   "schemes": [
@@ -33,7 +41,7 @@
     "/user": {
       "get": {
         "tags": [
-          "Users"
+          "Authenticated Apis"
         ],
         "description": "get all users",
         "produces": [
@@ -121,7 +129,7 @@
     "/user/{userId}": {
       "get": {
         "tags": [
-          "Users"
+          "Authenticated Apis"
         ],
         "description": "get users of given id",
         "produces": [
@@ -141,6 +149,54 @@
             "authentication": []
           }
         ],
+        "responses": {}
+      }
+    },
+    "/get/categories": {
+      "get": {
+        "tags": [
+          "Un-Authenticated Apis"
+        ],
+        "description": "Get all categories",
+      "produces": [
+        "application/json",
+        "application/xml"
+      ],
+      "responses": {}
+      }
+    },
+    "/post/categories": {
+      "post": {
+        "tags": [
+          "Authenticated Apis"
+        ],
+        "description": "create new category",
+        "produces": [
+          "application/json",
+          "application/xml"
+        ],
+        "security": [{
+          "authentication": []
+        }],
+        "parameters": [
+          {
+            "name": "name",
+            "in": "formData",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "quote",
+            "in": "formData",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "image",
+            "in": "formData",
+            "type": "string",
+            "required": false
+          }],
         "responses": {}
       }
     }

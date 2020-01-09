@@ -5,13 +5,17 @@ const categorySchema = mongoose.Schema({
         type: String,
         require: true
     },
-    id: {
-        type: Number,
+    quote: {
+        type: String,
         require: true
     },
     createdAt: {
         type: Date,
         default: Date.now,
+    },
+    image: {
+        type: String,
+        default: ''
     }
 });
 
