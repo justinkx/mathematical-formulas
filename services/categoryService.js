@@ -1,7 +1,8 @@
+
 const Categories = require('../models/Categories');
 
 async function getCategories() {
-    return await Categories.find()
+    return await Categories.find();
 }
 
 async function createCategory(categoryParams) {
@@ -14,12 +15,16 @@ async function createCategory(categoryParams) {
 
 async function updateCategory(categoryId,param) {
     const Category = await Categories.findById(categoryId);
-    if (!Category) throw `Category ?${categoryId} not found`;
-    Category.name = param.name;
+    if (!Category) throw `Category ${categoryId} not found`;
+    Object.assign(Category,param);
     return await Category.save();
+}
+async function deleteCategory(categoryId) {
+    return await Categories.deleteOne({_id: categoryId});
 }
 module.exports = {
 	getCategories,
 	createCategory,
-	updateCategory
+    updateCategory,
+    deleteCategory
 };

@@ -12,7 +12,10 @@ function jwt() {
             // public routes that don't require authentication
             '/user/authenticate',
             '/user/register',
-            '/get/categories'
+            {
+                url: /^\/get\/.*/,
+                methods: ['GET']
+            }
         ]
     });
 }

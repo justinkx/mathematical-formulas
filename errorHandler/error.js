@@ -11,7 +11,6 @@ const errorHandler = (app) => {
       // custom application error
       return res.status(400).json({ message: err });
     }
-
     if (err.name === 'ValidationError') {
       // mongoose validation error
       return res.status(400).json({ message: err.message });

@@ -3,20 +3,24 @@ const mongoose = require('mongoose');
 const topicSchema = mongoose.Schema({
     name: {
         type: String,
-        require: true
+        require: true,
+        unique: true,
     },
-    id: {
-        type: Number,
-        require: true
+    quote: {
+        type: String,
     },
     createdAt: {
         type: Date,
         default: Date.now,
     },
     categoryId: {
-        type: Schema.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         require: true,
         ref: 'Categories'
+    },
+    image: {
+        type: String,
+        default: ''
     }
 });
 

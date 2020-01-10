@@ -1,9 +1,9 @@
 {
   "swagger": "2.0",
   "info": {
-    "version": "1.0",
-    "title": "react-native chat rest-api",
-    "description": "A minimal nodejs express mongoose powered backend for a chat app in React-Native",
+    "version": "2.0",
+    "title": "Mathematical Equations Rest Api",
+    "description": "A minimal nodejs express mongoose powered backend for Mathematical Equations",
     "license": {
       "name": "MIT",
       "url": "https://opensource.org/licenses/MIT"
@@ -48,6 +48,10 @@
           "application/json",
           "application/xml"
         ],
+        "consumes": [
+          "application/json",
+          "application/xml"
+        ],
         "security": [{
           "authentication": []
         }],
@@ -61,6 +65,10 @@
         ],
         "description": "Authenticate User",
         "produces": [
+          "application/json",
+          "application/xml"
+        ],
+        "consumes": [
           "application/json",
           "application/xml"
         ],
@@ -85,6 +93,10 @@
       "post": {
         "tags": [
           "Authentication"
+        ],
+        "consumes": [
+          "application/json",
+          "application/xml"
         ],
         "description": "New user Registration",
         "produces": [
@@ -136,6 +148,10 @@
           "application/json",
           "application/xml"
         ],
+        "consumes": [
+          "application/json",
+          "application/xml"
+        ],
         "parameters": [
           {
             "name": "userId",
@@ -162,6 +178,10 @@
         "application/json",
         "application/xml"
       ],
+      "consumes": [
+        "application/json",
+        "application/xml"
+      ],
       "responses": {}
       }
     },
@@ -175,33 +195,28 @@
           "application/json",
           "application/xml"
         ],
+        "consumes": [
+          "application/json",
+          "application/xml"
+        ],
         "security": [{
           "authentication": []
         }],
         "parameters": [
           {
-            "name": "name",
-            "in": "formData",
-            "type": "string",
-            "required": true
-          },
-          {
-            "name": "quote",
-            "in": "formData",
-            "type": "string",
-            "required": true
-          },
-          {
-            "name": "image",
-            "in": "formData",
-            "type": "string",
-            "required": false
+            "in": "body",
+            "name": "body",
+            "description": "Updated Category object",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Categories"
+            }
           }],
         "responses": {}
       }
     },
     "/post/categories/{categoryId}": {
-      "post": {
+      "put": {
         "tags": [
           "Authenticated Apis"
         ],
@@ -213,12 +228,168 @@
           {
             "name": "categoryId",
             "in": "path",
+            "description": "category id needs to be updated",
             "type": "string",
             "required": true
           },
           {
-            "name": "name",
-            "in": "formData",
+            "in": "body",
+            "name": "body",
+            "description": "Updated Category object",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Categories"
+            }
+          }
+        ],
+        "produces": [
+          "application/json",
+          "application/xml"
+        ],
+        "consumes": [
+          "application/json",
+          "application/xml"
+        ],
+        "responses": {}
+      },
+      "delete": {
+        "tags": [
+          "Authenticated Apis"
+        ],
+        "description": "delete Category of given id",
+        "security": [{
+          "authentication": []
+        }],
+        "parameters": [
+          {
+            "name": "categoryId",
+            "in": "path",
+            "description": "category id needs to be deleted",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "produces": [
+          "application/json",
+          "application/xml"
+        ],
+        "consumes": [
+          "application/json",
+          "application/xml"
+        ],
+        "responses": {}
+      }
+    },
+    "/get/topics/{categoryId}": {
+      "get": {
+        "tags": [
+          "Un-Authenticated Apis"
+        ],
+        "description": "Get Topics For a Category",
+        "produces": [
+          "application/json",
+          "application/xml"
+        ],
+        "consumes": [
+          "application/json",
+          "application/xml"
+        ],
+        "parameters": [
+          {
+            "name": "categoryId",
+            "in": "path",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/post/topics": {
+      "post": {
+        "tags": [
+          "Authenticated Apis"
+        ],
+        "description": "Create new Topics",
+        "security": [{
+          "authentication": []
+        }],
+        "consumes": [
+          "application/json",
+          "application/xml"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Topics object",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Topics"
+            }
+          }
+        ],
+        "produces": [
+          "application/json",
+          "application/xml"
+        ],
+        "responses": {}
+      }
+    },
+    "/post/topics/{topicId}": {
+      "put": {
+        "tags": [
+          "Authenticated Apis"
+        ],
+        "description": "Update  Topics",
+        "security": [{
+          "authentication": []
+        }],
+        "consumes": [
+          "application/json",
+          "application/xml"
+        ],
+        "parameters": [
+          {
+            "name": "topicId",
+            "in": "path",
+            "description": "topic id needs to be updated",
+            "type": "string",
+            "required": true
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Topics object",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Topics"
+            }
+          }
+        ],
+        "produces": [
+          "application/json",
+          "application/xml"
+        ],
+        "responses": {}
+      },
+      "delete": {
+        "tags": [
+          "Authenticated Apis"
+        ],
+        "description": "Update  Topics",
+        "security": [{
+          "authentication": []
+        }],
+        "consumes": [
+          "application/json",
+          "application/xml"
+        ],
+        "parameters": [
+          {
+            "name": "topicId",
+            "in": "path",
+            "description": "topic id needs to be updated",
             "type": "string",
             "required": true
           }
@@ -228,6 +399,44 @@
           "application/xml"
         ],
         "responses": {}
+      }
+
+    }
+  },
+  "definitions": {
+    "Categories": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "quote": {
+          "type": "string"
+        },
+        "image": {
+          "type": "string"
+        }
+
+      },
+      "xml": {
+        "name": "Categories"
+      }
+    },
+    "Topics": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "quote": {
+          "type": "string"
+        },
+        "categoryId": {
+          "type": "string"
+        },
+        "image": {
+          "type": "string"
+        }
       }
     }
   }
