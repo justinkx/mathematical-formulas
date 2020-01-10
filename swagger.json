@@ -1,9 +1,9 @@
 {
   "swagger": "2.0",
   "info": {
-    "version": "1.0",
-    "title": "react-native chat rest-api",
-    "description": "A minimal nodejs express mongoose powered backend for a chat app in React-Native",
+    "version": "2.0",
+    "title": "Mathematical Equations Rest Api",
+    "description": "A minimal nodejs express mongoose powered backend for Mathematical Equations",
     "license": {
       "name": "MIT",
       "url": "https://opensource.org/licenses/MIT"
@@ -18,20 +18,17 @@
       "description": "User authentication for login and generating JW token"
     },
     {
-      "name": "Users",
-      "description": "Everything about Users"
+      "name": "Un-Authenticated Apis",
+      "description": "Apis Open To All Users"
     },
     {
-      "name": "Channels",
-      "description": "Everything about channels"
-    },
-    {
-      "name": "Messages",
-      "description": "Everything about message"
+      "name": "Authenticated Apis",
+      "description": "Apis Open To Admin"
     }
   ],
   "schemes": [
-    "http"
+    "http",
+    "https"
   ],
   "securityDefinitions": {
     "authentication": {
@@ -41,114 +38,17 @@
     }
   },
   "paths": {
-    "/message": {
-      "post": {
-        "tags": [
-          "Messages"
-        ],
-        "description": "Insert message",
-        "produces": [
-          "application/xml",
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "message",
-            "in": "formData",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "createdBy",
-            "in": "formData",
-            "type": "string",
-            "required": true
-          },
-          {
-            "name": "channelId",
-            "in": "formData",
-            "type": "string",
-            "required": true
-          }
-        ],
-        "security": [
-          {
-            "authentication": []
-          }
-        ],
-        "responses": {}
-      },
-      "get": {
-        "tags": [
-          "Messages"
-        ],
-        "description": "get all message",
-        "security": [
-          {
-            "authentication": []
-          }
-        ],
-        "responses": {}
-      }
-    },
-    "/message/{id}": {
-      "delete": {
-        "tags": ["Messages"],
-        "description": "Delete a message",
-        "produces":[
-          "application/json",
-          "application/xml"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "type": "string",
-            "required": true
-          }
-        ],
-        "security": [
-          {
-            "authentication": []
-          }
-        ],
-        "responses": {}
-      }
-    },
-    "/message/{channelId}": {
-      "get": {
-        "tags": [
-          "Messages"
-        ],
-        "description": "messages associated with a channel",
-        "produces": [
-          "application/xml",
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "channelId",
-            "in": "path",
-            "type": "string",
-            "required": true,
-            "default": "5ce793d80910cf06247984d6"
-          }
-        ],
-        "security": [
-          {
-            "authentication": []
-          }
-        ],
-        "responses": {}
-      }
-    },
     "/user": {
       "get": {
         "tags": [
-          "Users"
+          "Authenticated Apis"
         ],
         "description": "get all users",
         "produces": [
+          "application/json",
+          "application/xml"
+        ],
+        "consumes": [
           "application/json",
           "application/xml"
         ],
@@ -165,6 +65,10 @@
         ],
         "description": "Authenticate User",
         "produces": [
+          "application/json",
+          "application/xml"
+        ],
+        "consumes": [
           "application/json",
           "application/xml"
         ],
@@ -189,6 +93,10 @@
       "post": {
         "tags": [
           "Authentication"
+        ],
+        "consumes": [
+          "application/json",
+          "application/xml"
         ],
         "description": "New user Registration",
         "produces": [
@@ -226,14 +134,6 @@
             "in": "formData",
             "type": "number",
             "required": true
-          },
-          {
-            "name": "channels",
-            "in": "formData",
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
           }],
         "responses": {}
       }
@@ -241,10 +141,14 @@
     "/user/{userId}": {
       "get": {
         "tags": [
-          "Users"
+          "Authenticated Apis"
         ],
         "description": "get users of given id",
         "produces": [
+          "application/json",
+          "application/xml"
+        ],
+        "consumes": [
           "application/json",
           "application/xml"
         ],
@@ -264,60 +168,275 @@
         "responses": {}
       }
     },
-    "/channel": {
+    "/get/categories": {
       "get": {
         "tags": [
-          "Channels"
+          "Un-Authenticated Apis"
         ],
-        "description": "Get list of all channels",
+        "description": "Get all categories",
+      "produces": [
+        "application/json",
+        "application/xml"
+      ],
+      "consumes": [
+        "application/json",
+        "application/xml"
+      ],
+      "responses": {}
+      }
+    },
+    "/post/categories": {
+      "post": {
+        "tags": [
+          "Authenticated Apis"
+        ],
+        "description": "create new category",
         "produces": [
           "application/json",
           "application/xml"
         ],
-        "security": [
+        "consumes": [
+          "application/json",
+          "application/xml"
+        ],
+        "security": [{
+          "authentication": []
+        }],
+        "parameters": [
           {
-            "authentication": []
+            "in": "body",
+            "name": "body",
+            "description": "Updated Category object",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Categories"
+            }
+          }],
+        "responses": {}
+      }
+    },
+    "/post/categories/{categoryId}": {
+      "put": {
+        "tags": [
+          "Authenticated Apis"
+        ],
+        "description": "Update Category of given id",
+        "security": [{
+          "authentication": []
+        }],
+        "parameters": [
+          {
+            "name": "categoryId",
+            "in": "path",
+            "description": "category id needs to be updated",
+            "type": "string",
+            "required": true
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Updated Category object",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Categories"
+            }
           }
+        ],
+        "produces": [
+          "application/json",
+          "application/xml"
+        ],
+        "consumes": [
+          "application/json",
+          "application/xml"
         ],
         "responses": {}
       },
-      "post": {
+      "delete": {
         "tags": [
-          "Channels"
+          "Authenticated Apis"
         ],
-        "description": "Create new channel",
+        "description": "delete Category of given id",
+        "security": [{
+          "authentication": []
+        }],
+        "parameters": [
+          {
+            "name": "categoryId",
+            "in": "path",
+            "description": "category id needs to be deleted",
+            "type": "string",
+            "required": true
+          }
+        ],
         "produces": [
+          "application/json",
+          "application/xml"
+        ],
+        "consumes": [
+          "application/json",
+          "application/xml"
+        ],
+        "responses": {}
+      }
+    },
+    "/get/topics/{categoryId}": {
+      "get": {
+        "tags": [
+          "Un-Authenticated Apis"
+        ],
+        "description": "Get Topics For a Category",
+        "produces": [
+          "application/json",
+          "application/xml"
+        ],
+        "consumes": [
           "application/json",
           "application/xml"
         ],
         "parameters": [
           {
-            "name": "createdBy",
-            "in": "formData",
+            "name": "categoryId",
+            "in": "path",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/post/topics": {
+      "post": {
+        "tags": [
+          "Authenticated Apis"
+        ],
+        "description": "Create new Topics",
+        "security": [{
+          "authentication": []
+        }],
+        "consumes": [
+          "application/json",
+          "application/xml"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Topics object",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Topics"
+            }
+          }
+        ],
+        "produces": [
+          "application/json",
+          "application/xml"
+        ],
+        "responses": {}
+      }
+    },
+    "/post/topics/{topicId}": {
+      "put": {
+        "tags": [
+          "Authenticated Apis"
+        ],
+        "description": "Update  Topics",
+        "security": [{
+          "authentication": []
+        }],
+        "consumes": [
+          "application/json",
+          "application/xml"
+        ],
+        "parameters": [
+          {
+            "name": "topicId",
+            "in": "path",
+            "description": "topic id needs to be updated",
             "type": "string",
             "required": true
           },
           {
-            "name": "name",
-            "in": "formData",
-            "type": "string"
-          },
-          {
-            "name": "users",
-            "in": "formData",
-            "type": "array",
+            "in": "body",
+            "name": "body",
+            "description": "Topics object",
             "required": true,
-            "items": {
-              "type": "string"
+            "schema": {
+              "$ref": "#/definitions/Topics"
             }
           }
         ],
-        "security": [
-          {
-            "authentication": []
-          }
+        "produces": [
+          "application/json",
+          "application/xml"
         ],
         "responses": {}
+      },
+      "delete": {
+        "tags": [
+          "Authenticated Apis"
+        ],
+        "description": "Update  Topics",
+        "security": [{
+          "authentication": []
+        }],
+        "consumes": [
+          "application/json",
+          "application/xml"
+        ],
+        "parameters": [
+          {
+            "name": "topicId",
+            "in": "path",
+            "description": "topic id needs to be updated",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "produces": [
+          "application/json",
+          "application/xml"
+        ],
+        "responses": {}
+      }
+
+    }
+  },
+  "definitions": {
+    "Categories": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "quote": {
+          "type": "string"
+        },
+        "image": {
+          "type": "string"
+        }
+
+      },
+      "xml": {
+        "name": "Categories"
+      }
+    },
+    "Topics": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "quote": {
+          "type": "string"
+        },
+        "categoryId": {
+          "type": "string"
+        },
+        "image": {
+          "type": "string"
+        }
       }
     }
   }

@@ -1,8 +1,6 @@
 const initializeEndpoints = (app) => {
-    app.use('/channel',require('../controller/channelController'));
     app.use('/user',require('../controller/userController'));
-    app.use('/message',require('../controller/messageController'));
-    app.use('/chat',require('../controller/chatController'));
-    app.use('/categories',require('../controller/categoryController'));
+    app.use('/get',require('../controller/getController'));
+    app.use('/post',require('../controller/postController'));
 }
 module.exports = initializeEndpoints;

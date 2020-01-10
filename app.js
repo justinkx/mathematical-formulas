@@ -18,7 +18,11 @@ app.use(cors());
 // use JWT auth to secure the api
 
 
-
+// if(process.env.NODE_ENV === "production"){
+//     app.use('/docs', (req, res, next) => {
+//       res.status(404).send("Not Found");
+//     });
+// }
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use(jwt());
 
@@ -31,10 +35,10 @@ errorHandler(app);
 
 //CONNECT TO DB
 mongoose.connect(`mongodb://jkx:jkx1993%23%24@cluster0-shard-00-00-zrqed.mongodb.net:27017,
-cluster0-shard-00-01-zrqed.mongodb.net:27017,cluster0-shard-00-02-zrqed.mongodb.net:27017/rn-chat?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true`,{
+cluster0-shard-00-01-zrqed.mongodb.net:27017,cluster0-shard-00-02-zrqed.mongodb.net:27017/${process.env.NODE_ENV === 'profuction' ?'mathematical-formula' : 'mathematical-formula-test'}?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true`,{
 useNewUrlParser: true},(err,client)=> {
     console.log('connected to db');
 });
 
 
-app.listen(process.env.PORT || port, () => console.log(`Example app listening on port ${port}!`))
+app.listen(process.env.PORT || port, () => console.log(`Example app listening on port ${port},${process.env.NODE_ENV}!`))

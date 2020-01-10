@@ -1,21 +1,30 @@
+
 const Categories = require('../models/Categories');
 
 async function getCategories() {
-    return await Categories.find()
+    return await Categories.find();
 }
 
 async function createCategory(categoryParams) {
+    if (await Categories.findOne({ name: categoryParams.name })) {
+        throw `Name ${categoryParams.name} is already taken. Try new name`;
+    }
     const newCategory = new Categories(categoryParams);
-    await newCategory.save();
+    return await newCategory.save();
 }
 
-async function updateCategory(categoryId,name) {
+async function updateCategory(categoryId,param) {
     const Category = await Categories.findById(categoryId);
-    Category.name = name;
-    await Category.save();
+    if (!Category) throw `Category ${categoryId} not found`;
+    Object.assign(Category,param);
+    return await Category.save();
+}
+async function deleteCategory(categoryId) {
+    return await Categories.deleteOne({_id: categoryId});
 }
 module.exports = {
 	getCategories,
 	createCategory,
-	updateCategory
+    updateCategory,
+    deleteCategory
 };

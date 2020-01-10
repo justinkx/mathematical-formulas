@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const categorySchema = mongoose.Schema({
+const topicSchema = mongoose.Schema({
     name: {
         type: String,
         require: true,
@@ -13,10 +13,15 @@ const categorySchema = mongoose.Schema({
         type: Date,
         default: Date.now,
     },
+    categoryId: {
+        type: mongoose.Schema.Types.ObjectId,
+        require: true,
+        ref: 'Categories'
+    },
     image: {
         type: String,
         default: ''
     }
 });
 
-module.exports = mongoose.model('Categories',categorySchema);
+module.exports = mongoose.model('Topics',topicSchema);
