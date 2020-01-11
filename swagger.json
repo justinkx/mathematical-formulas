@@ -377,7 +377,7 @@
         "tags": [
           "Authenticated Apis"
         ],
-        "description": "Update  Topics",
+        "description": "delete  Topics",
         "security": [{
           "authentication": []
         }],
@@ -389,7 +389,7 @@
           {
             "name": "topicId",
             "in": "path",
-            "description": "topic id needs to be updated",
+            "description": "topic id needs to be deleted",
             "type": "string",
             "required": true
           }
@@ -437,6 +437,9 @@
           "application/json",
           "application/xml"
         ],
+        "security": [{
+          "authentication": []
+        }],
         "parameters": [
           {
             "in": "body",
@@ -446,6 +449,71 @@
             "schema": {
               "$ref": "#/definitions/Equations"
             }
+          }
+        ],
+        "produces": [
+          "application/json",
+          "application/xml"
+        ],
+        "responses": {}
+      }
+    },
+    "/post/equations/{equationId}": {
+      "put": {
+        "tags": [
+          "Authenticated Apis"
+        ],
+        "security": [{
+          "authentication": []
+        }],
+        "description": "update existing equation",
+        "consumes": [
+          "application/json",
+          "application/xml"
+        ],
+        "parameters": [
+          {
+            "name": "equationId",
+            "in": "path",
+            "description": "equationId  needs to be updated",
+            "type": "string",
+            "required": true
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Equations object",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Equations"
+            }
+          }
+        ],
+        "produces": [
+          "application/json",
+          "application/xml"
+        ],
+        "responses": {}
+      },
+      "delete": {
+        "tags": [
+          "Authenticated Apis"
+        ],
+        "security": [{
+          "authentication": []
+        }],
+        "description": "delete existing equation",
+        "consumes": [
+          "application/json",
+          "application/xml"
+        ],
+        "parameters": [
+          {
+            "name": "equationId",
+            "in": "path",
+            "description": "equationId  needs to be deleted",
+            "type": "string",
+            "required": true
           }
         ],
         "produces": [
