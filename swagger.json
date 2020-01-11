@@ -48,10 +48,7 @@
           "application/json",
           "application/xml"
         ],
-        "consumes": [
-          "application/json",
-          "application/xml"
-        ],
+       
         "security": [{
           "authentication": []
         }],
@@ -65,10 +62,6 @@
         ],
         "description": "Authenticate User",
         "produces": [
-          "application/json",
-          "application/xml"
-        ],
-        "consumes": [
           "application/json",
           "application/xml"
         ],
@@ -93,10 +86,6 @@
       "post": {
         "tags": [
           "Authentication"
-        ],
-        "consumes": [
-          "application/json",
-          "application/xml"
         ],
         "description": "New user Registration",
         "produces": [
@@ -148,10 +137,7 @@
           "application/json",
           "application/xml"
         ],
-        "consumes": [
-          "application/json",
-          "application/xml"
-        ],
+       
         "parameters": [
           {
             "name": "userId",
@@ -195,10 +181,7 @@
           "application/json",
           "application/xml"
         ],
-        "consumes": [
-          "application/json",
-          "application/xml"
-        ],
+       
         "security": [{
           "authentication": []
         }],
@@ -246,10 +229,7 @@
           "application/json",
           "application/xml"
         ],
-        "consumes": [
-          "application/json",
-          "application/xml"
-        ],
+       
         "responses": {}
       },
       "delete": {
@@ -273,10 +253,7 @@
           "application/json",
           "application/xml"
         ],
-        "consumes": [
-          "application/json",
-          "application/xml"
-        ],
+       
         "responses": {}
       }
     },
@@ -290,10 +267,7 @@
           "application/json",
           "application/xml"
         ],
-        "consumes": [
-          "application/json",
-          "application/xml"
-        ],
+       
         "parameters": [
           {
             "name": "categoryId",
@@ -314,10 +288,7 @@
         "security": [{
           "authentication": []
         }],
-        "consumes": [
-          "application/json",
-          "application/xml"
-        ],
+       
         "parameters": [
           {
             "in": "body",
@@ -345,10 +316,7 @@
         "security": [{
           "authentication": []
         }],
-        "consumes": [
-          "application/json",
-          "application/xml"
-        ],
+       
         "parameters": [
           {
             "name": "topicId",
@@ -377,19 +345,16 @@
         "tags": [
           "Authenticated Apis"
         ],
-        "description": "Update  Topics",
+        "description": "delete  Topics",
         "security": [{
           "authentication": []
         }],
-        "consumes": [
-          "application/json",
-          "application/xml"
-        ],
+       
         "parameters": [
           {
             "name": "topicId",
             "in": "path",
-            "description": "topic id needs to be updated",
+            "description": "topic id needs to be deleted",
             "type": "string",
             "required": true
           }
@@ -400,7 +365,115 @@
         ],
         "responses": {}
       }
-
+    },
+    "/get/equations/{topicId}": {
+      "get": {
+        "tags": [
+          "Un-Authenticated Apis"
+        ],
+        "description": "List of Equations for a particular topic",
+        "parameters": [
+          {
+            "name": "topicId",
+            "in": "path",
+            "description": "topic id",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "produces": [
+          "application/json",
+          "application/xml"
+        ],
+        "responses": {}
+      }
+    },
+    "/post/equations": {
+      "post": {
+        "tags": [
+          "Authenticated Apis"
+        ],
+        "description": "Create new equation",
+       
+        "security": [{
+          "authentication": []
+        }],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Equations object",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Equations"
+            }
+          }
+        ],
+        "produces": [
+          "application/json",
+          "application/xml"
+        ],
+        "responses": {}
+      }
+    },
+    "/post/equations/{equationId}": {
+      "put": {
+        "tags": [
+          "Authenticated Apis"
+        ],
+        "security": [{
+          "authentication": []
+        }],
+        "description": "update existing equation",
+       
+        "parameters": [
+          {
+            "name": "equationId",
+            "in": "path",
+            "description": "equationId  needs to be updated",
+            "type": "string",
+            "required": true
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Equations object",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Equations"
+            }
+          }
+        ],
+        "produces": [
+          "application/json",
+          "application/xml"
+        ],
+        "responses": {}
+      },
+      "delete": {
+        "tags": [
+          "Authenticated Apis"
+        ],
+        "security": [{
+          "authentication": []
+        }],
+        "description": "delete existing equation",
+       
+        "parameters": [
+          {
+            "name": "equationId",
+            "in": "path",
+            "description": "equationId  needs to be deleted",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "produces": [
+          "application/json",
+          "application/xml"
+        ],
+        "responses": {}
+      }
     }
   },
   "definitions": {
@@ -435,6 +508,26 @@
           "type": "string"
         },
         "image": {
+          "type": "string"
+        }
+      }
+    },
+    "Equations": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "topicId": {
+          "type": "string"
+        },
+        "description": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "latex": {
           "type": "string"
         }
       }

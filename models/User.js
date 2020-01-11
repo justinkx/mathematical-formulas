@@ -31,6 +31,9 @@ const userSchema = mongoose.Schema({
     },
     createdDate: {
         type: Date, default: Date.now
+    },
+    hash: {
+        type: String
     }
 });
 

@@ -8,3 +8,5 @@ yarn-error.log
 buck-out/
 \.buckd/
 
+yarn.lock
+package-lock.json

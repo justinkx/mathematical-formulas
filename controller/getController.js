@@ -3,9 +3,13 @@ const router = express.Router();
 const categoryService = require("../services/categoryService");
 const topicService = require("../services/topicService");
 const generator = require('../quotes/randomQuoteGenerator');
+const equationService = require('../services/equationServices');
+const mathJax = require('../services/mathjaxService');
+
 
 router.get("/categories", getCategory);
 router.get("/topics/:categoryId", getTopics);
+router.get("/equations/:topicId", getEquations);
 
 function getCategory(req, res, next) {
   categoryService.getCategories()
@@ -40,6 +44,20 @@ function getTopics(req, res, next) {
       res.json(topics);
   })
     .catch(error => next(error));
+}
+
+function getEquations(req,res, next) {
+  equationService.getEquations(req.params.topicId)
+  .then(async collection => {
+    const equations = [];
+    for(let eq of collection ) {
+      eq = eq.toObject();
+      const svg = await mathJax.generateSvg(eq.latex);
+      equations.push({...eq,svg: svg});
+    }
+    res.json(equations);
+  })
+  .catch(error => next(error));
 }
 
 module.exports = router;
