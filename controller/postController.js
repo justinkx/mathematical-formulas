@@ -5,6 +5,8 @@ const topicService = require('../services/topicService');
 const equationService = require('../services/equationServices');
 const multer = require('multer');
 const upload = multer();
+const jwt = require('jsonwebtoken');
+const config = require('../_helpers/config.json');
 
 router.post('/categories', createCategory);
 router.put('/categories/:categoryId',updateCategory);
@@ -17,48 +19,62 @@ router.put('/equations/:equationId', updateEquation);
 router.delete('/equations/:equationId', deleteEquation);
 
 function createCategory(req, res, next) {
-    categoryService.createCategory(req.body)
+   const uid = getUserId(req);
+    categoryService.createCategory(req.body,uid)
   .then(categories => {res.json(categories)})
   .catch(error => {next(error)});
 }
 function updateCategory(req,res, next) {
-  categoryService.updateCategory(req.params.categoryId,req.body)
+  const uid = getUserId(req);
+  categoryService.updateCategory(req.params.categoryId,req.body,uid)
   .then(category => {res.json(category)})
   .catch(error => {next(error)});
 }
 function deleteCategory(req,res, next) {
-  categoryService.deleteCategory(req.params.categoryId)
+  const uid = getUserId(req);
+  categoryService.deleteCategory(req.params.categoryId,uid)
   .then(resp => res.json(resp))
   .catch(err=> next(err))
 }
 function createTopic(req,res, next) {
-  topicService.createTopic(req.body)
+  const uid = getUserId(req);
+  topicService.createTopic(req.body,uid)
   .then(topic => res.json(topic))
   .catch(error => next(error))
 }
 function updateTopic(req, res, next) {
-  topicService.updateTopic(req.params.topicId,req.body)
+  const uid = getUserId(req);
+  topicService.updateTopic(req.params.topicId,req.body,uid)
   .then(resp => res.json(resp))
   .catch(err=> next(err))
 }
 function deleteTopic(req, res, next) {
-  topicService.deleteTopic(req.params.topicId)
+  const uid = getUserId(req);
+  topicService.deleteTopic(req.params.topicId,uid)
   .then(resp => res.json(resp))
   .catch(err=> next(err))
 }
 function createEquation(req,res,next) {
-  equationService.createEquation(req.body)
+  const uid = getUserId(req);
+  equationService.createEquation(req.body,uid)
   .then(equation=> res.json(equation))
   .catch(error => next(error));
 }
 function updateEquation(req,res, next) {
-  equationService.updateEquation(req.params.equationId,req.body)
+  const uid = getUserId(req);
+  equationService.updateEquation(req.params.equationId,req.body,uid)
   .then(equation => res.json(equation))
   .catch(error => next(error));
 }
 function deleteEquation(req,res,next) {
-  equationService.deleteEquation(req.params.equationId)
+  const uid = getUserId(req);
+  equationService.deleteEquation(req.params.equationId,uid)
   .then(resp => res.json(resp))
   .catch(err => next(err));
+}
+function getUserId(req) {
+  const token = req.headers.authorization.split(' ')[1];
+  const {sub} = jwt.verify(token, config.secret);
+  return sub;
 }
 module.exports = router;

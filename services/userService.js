@@ -1,6 +1,7 @@
 const config = require('../_helpers/config.json');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
+const roleService = require('./roleService');
 
 const User = require('../models/User');
 const Roles = require('../models/UserRole');
@@ -66,7 +67,10 @@ async function update(id, userParam) {
     if (user.email !== userParam.email && await User.findOne({ email: userParam.email })) {
         throw 'Email "' + userParam.email + '" is already taken';
     }
-
+    const role = await roleService.findUserRole(id);
+    if (!role.isAdmin) {
+        throw `You Don't Have Admin Access`;
+    }
     // hash password if it was entered
     if (userParam.password) {
         userParam.password = bcrypt.hashSync(userParam.password, 10);
@@ -83,6 +87,10 @@ async function update(id, userParam) {
 }
 
 async function _delete(id) {
+    const role = await roleService.findUserRole(id);
+    if (!role.isAdmin) {
+        throw `You Don't Have Admin Access`;
+    }
     await User.findByIdAndRemove(id);
 }
 

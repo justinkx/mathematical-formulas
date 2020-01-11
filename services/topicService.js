@@ -1,12 +1,16 @@
 const Topics = require('../models/Topics');
 const Categories = require('../models/Categories');
-
+const roleService = require('./roleService');
 
 async function getTopics(categoryId) {
     return await Topics.find({categoryId: categoryId})
 }
 
-async function createTopic(topicParams) {
+async function createTopic(topicParams,uid) {
+    const role = await roleService.findUserRole(uid);
+    if (!role.isAdmin) {
+        throw `You Don't Have Admin Access`;
+    }
     const category = await Categories.findById(topicParams.categoryId)
     if (!category) {
         throw `Category for the topic does not exist`;
@@ -21,7 +25,11 @@ async function createTopic(topicParams) {
         topic: savedTopic
     }
 }
-async function updateTopic(id, topicParams) {
+async function updateTopic(id, topicParams,uid) {
+    const role = await roleService.findUserRole(uid);
+    if (!role.isAdmin) {
+        throw `You Don't Have Admin Access`;
+    }
     const topic = await Topics.findById(id);
     if(!topic) throw `Topic not found.`;
     if (topicParams.categoryId) {
@@ -38,7 +46,11 @@ async function updateTopic(id, topicParams) {
     }
 }
 
-async function deleteTopic(id) {
+async function deleteTopic(id,uid) {
+    const role = await roleService.findUserRole(uid);
+    if (!role.isAdmin) {
+        throw `You Don't Have Admin Access`;
+    }
     return await Topics.deleteOne({_id: id});
 }
 module.exports = {

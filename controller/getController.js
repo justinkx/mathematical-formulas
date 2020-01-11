@@ -6,6 +6,7 @@ const generator = require('../quotes/randomQuoteGenerator');
 const equationService = require('../services/equationServices');
 const mathJax = require('../services/mathjaxService');
 
+
 router.get("/categories", getCategory);
 router.get("/topics/:categoryId", getTopics);
 router.get("/equations/:topicId", getEquations);
@@ -52,11 +53,11 @@ function getEquations(req,res, next) {
     for(let eq of collection ) {
       eq = eq.toObject();
       const svg = await mathJax.generateSvg(eq.latex);
-      console.log('svg',svg);
       equations.push({...eq,svg: svg});
     }
     res.json(equations);
   })
   .catch(error => next(error));
 }
+
 module.exports = router;
