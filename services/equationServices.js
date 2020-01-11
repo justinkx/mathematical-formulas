@@ -2,7 +2,7 @@ const Equations = require('../models/Equations');
 const Topics = require('../models/Topics');
 
 async function getEquations(topicId) {
-    return await Equations.find({topicId: topicId})
+    return await Equations.find({topicId: topicId});
 }
 
 async function createEquation(equationParams) {
@@ -10,7 +10,7 @@ async function createEquation(equationParams) {
     if (!Topic) {
         throw `Topic for the Equation doesnot exist.`;
     }
-    if (Equations.findOne({name: equationParams.name})) {
+    if (await Equations.findOne({name: equationParams.name})) {
         throw `Name ${equationParams.name} already used.`;
     }
     const equation = new Equations(equationParams);

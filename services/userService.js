@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 
 const User = require('../models/User');
+const Roles = require('../models/UserRole');
 
 async function authenticate({ email, password }) {
     const user = await User.findOne({ email });
@@ -15,6 +16,9 @@ async function authenticate({ email, password }) {
             ...userWithoutHash,
             token
         };
+    }
+    if (!user) {
+        throw `email or password is incorrect`;
     }
 }
 
@@ -41,10 +45,16 @@ async function create(userParam) {
 
     // save user
     const createdUser = await user.save();
-    delete createdUser.password;
+    const _user = createdUser.toObject();
+
+    if (!await Roles.findOne({userId: _user._id})) {
+        const newRole = new Roles({userId: _user._id});
+        await newRole.save();
+    }
+    delete _user.password;
     return {
 		message: 'User created successfully ...',
-		user: createdUser
+		user: _user
 	};
 }
 
@@ -59,7 +69,7 @@ async function update(id, userParam) {
 
     // hash password if it was entered
     if (userParam.password) {
-        userParam.hash = bcrypt.hashSync(userParam.password, 10);
+        userParam.password = bcrypt.hashSync(userParam.password, 10);
     }
 
     // copy userParam properties to user

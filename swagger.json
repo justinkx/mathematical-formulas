@@ -48,10 +48,7 @@
           "application/json",
           "application/xml"
         ],
-        "consumes": [
-          "application/json",
-          "application/xml"
-        ],
+       
         "security": [{
           "authentication": []
         }],
@@ -65,10 +62,6 @@
         ],
         "description": "Authenticate User",
         "produces": [
-          "application/json",
-          "application/xml"
-        ],
-        "consumes": [
           "application/json",
           "application/xml"
         ],
@@ -93,10 +86,6 @@
       "post": {
         "tags": [
           "Authentication"
-        ],
-        "consumes": [
-          "application/json",
-          "application/xml"
         ],
         "description": "New user Registration",
         "produces": [
@@ -148,10 +137,7 @@
           "application/json",
           "application/xml"
         ],
-        "consumes": [
-          "application/json",
-          "application/xml"
-        ],
+       
         "parameters": [
           {
             "name": "userId",
@@ -195,10 +181,7 @@
           "application/json",
           "application/xml"
         ],
-        "consumes": [
-          "application/json",
-          "application/xml"
-        ],
+       
         "security": [{
           "authentication": []
         }],
@@ -246,10 +229,7 @@
           "application/json",
           "application/xml"
         ],
-        "consumes": [
-          "application/json",
-          "application/xml"
-        ],
+       
         "responses": {}
       },
       "delete": {
@@ -273,10 +253,7 @@
           "application/json",
           "application/xml"
         ],
-        "consumes": [
-          "application/json",
-          "application/xml"
-        ],
+       
         "responses": {}
       }
     },
@@ -290,10 +267,7 @@
           "application/json",
           "application/xml"
         ],
-        "consumes": [
-          "application/json",
-          "application/xml"
-        ],
+       
         "parameters": [
           {
             "name": "categoryId",
@@ -314,10 +288,7 @@
         "security": [{
           "authentication": []
         }],
-        "consumes": [
-          "application/json",
-          "application/xml"
-        ],
+       
         "parameters": [
           {
             "in": "body",
@@ -345,10 +316,7 @@
         "security": [{
           "authentication": []
         }],
-        "consumes": [
-          "application/json",
-          "application/xml"
-        ],
+       
         "parameters": [
           {
             "name": "topicId",
@@ -381,10 +349,7 @@
         "security": [{
           "authentication": []
         }],
-        "consumes": [
-          "application/json",
-          "application/xml"
-        ],
+       
         "parameters": [
           {
             "name": "topicId",
@@ -401,16 +366,12 @@
         "responses": {}
       }
     },
-    "/get/equation/{topicId}": {
+    "/get/equations/{topicId}": {
       "get": {
         "tags": [
           "Un-Authenticated Apis"
         ],
         "description": "List of Equations for a particular topic",
-        "consumes": [
-          "application/json",
-          "application/xml"
-        ],
         "parameters": [
           {
             "name": "topicId",
@@ -433,10 +394,7 @@
           "Authenticated Apis"
         ],
         "description": "Create new equation",
-        "consumes": [
-          "application/json",
-          "application/xml"
-        ],
+       
         "security": [{
           "authentication": []
         }],
@@ -467,10 +425,7 @@
           "authentication": []
         }],
         "description": "update existing equation",
-        "consumes": [
-          "application/json",
-          "application/xml"
-        ],
+       
         "parameters": [
           {
             "name": "equationId",
@@ -503,10 +458,7 @@
           "authentication": []
         }],
         "description": "delete existing equation",
-        "consumes": [
-          "application/json",
-          "application/xml"
-        ],
+       
         "parameters": [
           {
             "name": "equationId",
@@ -570,7 +522,10 @@
           "type": "string"
         },
         "description": {
-          "type": "string"
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
         },
         "latex": {
           "type": "string"

@@ -4,6 +4,7 @@ const categoryService = require("../services/categoryService");
 const topicService = require("../services/topicService");
 const generator = require('../quotes/randomQuoteGenerator');
 const equationService = require('../services/equationServices');
+const mathJax = require('../services/mathjaxService');
 
 router.get("/categories", getCategory);
 router.get("/topics/:categoryId", getTopics);
@@ -46,8 +47,15 @@ function getTopics(req, res, next) {
 
 function getEquations(req,res, next) {
   equationService.getEquations(req.params.topicId)
-  .then(collection => {
-    res.json(collection);
+  .then(async collection => {
+    const equations = [];
+    for(let eq of collection ) {
+      eq = eq.toObject();
+      const svg = await mathJax.generateSvg(eq.latex);
+      console.log('svg',svg);
+      equations.push({...eq,svg: svg});
+    }
+    res.json(equations);
   })
   .catch(error => next(error));
 }

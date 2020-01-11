@@ -5,11 +5,12 @@ const port = 5000;
 const swaggerUi = require("swagger-ui-express");
 const swaggerDocument = require("./swagger.json");
 const cors = require("cors");
-
+const mathjaxService = require('./services/mathjaxService');
 const jwt = require("./_helpers/jwt");
 const wakeUpHeroku = require('./wakeupHeroku');
 const initializeEndpoints = require("./routes/Routes");
 const errorHandler = require("./errorHandler/error");
+const mjAPI = require("mathjax-node");
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -24,7 +25,8 @@ app.use(cors());
 // }
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use(jwt());
-
+mjAPI.config(mathjaxService.config);
+mjAPI.start();
 
 
 //configure  Routes and End-Points

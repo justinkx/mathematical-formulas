@@ -6,10 +6,9 @@ const equationSchema = mongoose.Schema({
         require: true,
         unique: true,
     },
-    description: {
-        type: String,
-        require: true
-    },
+    description: [{
+        type: String
+    }],
     latex: {
         type: String,
         require: true

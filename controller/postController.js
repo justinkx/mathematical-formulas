@@ -3,6 +3,8 @@ const router = express.Router();
 const categoryService = require('../services/categoryService');
 const topicService = require('../services/topicService');
 const equationService = require('../services/equationServices');
+const multer = require('multer');
+const upload = multer();
 
 router.post('/categories', createCategory);
 router.put('/categories/:categoryId',updateCategory);
@@ -10,7 +12,7 @@ router.delete('/categories/:categoryId',deleteCategory);
 router.post('/topics', createTopic);
 router.put('/topics/:topicId', updateTopic);
 router.delete('/topics/:topicId',deleteTopic);
-router.post('/equations', createEquation);
+router.post('/equations',upload.none(), createEquation);
 router.put('/equations/:equationId', updateEquation);
 router.delete('/equations/:equationId', deleteEquation);
 
