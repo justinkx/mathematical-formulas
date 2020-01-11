@@ -400,7 +400,60 @@
         ],
         "responses": {}
       }
-
+    },
+    "/get/equation/{topicId}": {
+      "get": {
+        "tags": [
+          "Un-Authenticated Apis"
+        ],
+        "description": "List of Equations for a particular topic",
+        "consumes": [
+          "application/json",
+          "application/xml"
+        ],
+        "parameters": [
+          {
+            "name": "topicId",
+            "in": "path",
+            "description": "topic id",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "produces": [
+          "application/json",
+          "application/xml"
+        ],
+        "responses": {}
+      }
+    },
+    "/post/equations": {
+      "post": {
+        "tags": [
+          "Authenticated Apis"
+        ],
+        "description": "Create new equation",
+        "consumes": [
+          "application/json",
+          "application/xml"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Equations object",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Equations"
+            }
+          }
+        ],
+        "produces": [
+          "application/json",
+          "application/xml"
+        ],
+        "responses": {}
+      }
     }
   },
   "definitions": {
@@ -435,6 +488,23 @@
           "type": "string"
         },
         "image": {
+          "type": "string"
+        }
+      }
+    },
+    "Equations": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "topicId": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "latex": {
           "type": "string"
         }
       }

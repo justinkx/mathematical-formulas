@@ -3,9 +3,11 @@ const router = express.Router();
 const categoryService = require("../services/categoryService");
 const topicService = require("../services/topicService");
 const generator = require('../quotes/randomQuoteGenerator');
+const equationService = require('../services/equationServices');
 
 router.get("/categories", getCategory);
 router.get("/topics/:categoryId", getTopics);
+router.get("/equations/:topicId", getEquations);
 
 function getCategory(req, res, next) {
   categoryService.getCategories()
@@ -42,4 +44,11 @@ function getTopics(req, res, next) {
     .catch(error => next(error));
 }
 
+function getEquations(req,res, next) {
+  equationService.getEquations(req.params.topicId)
+  .then(collection => {
+    res.json(collection);
+  })
+  .catch(error => next(error));
+}
 module.exports = router;
