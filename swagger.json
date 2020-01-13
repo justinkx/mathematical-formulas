@@ -474,6 +474,28 @@
         ],
         "responses": {}
       }
+    },
+    "/get/svg/": {
+      "get": {
+        "tags": [
+          "Un-Authenticated Apis"
+        ],
+        "description": "latex equation to svg",
+        "parameters": [
+          {
+            "name": "latex",
+            "in": "query",
+            "description": "latex equation",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "produces": [
+          "application/json",
+          "application/xml"
+        ],
+        "responses": {}
+      }
     }
   },
   "definitions": {

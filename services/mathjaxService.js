@@ -23,7 +23,7 @@ function generateSvg(latex) {
         if (!data.errors) {
           resolve(data.svg);
         } else {
-          reject(error);
+          reject(data.errors);
         }
       }
     );
