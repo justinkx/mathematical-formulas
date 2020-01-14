@@ -53,7 +53,7 @@ function getEquations(req,res, next) {
     const equations = [];
     for(let eq of collection ) {
       eq = eq.toObject();
-      const svg = await mathJax.generateSvg(eq.latex);
+      const svg = await mathJax.generateSvg(JSON.parse(eq.latex));
       equations.push({...eq,svg: svg});
     }
     res.json(equations);
