@@ -5,7 +5,7 @@
     "title": "Mathematical Equations Rest Api",
     "description": "A minimal nodejs express mongoose powered backend for Mathematical Equations",
     "license": {
-      "name": "f'(x) = \\lim_{h \\rightarrow 0} \\frac{f(x+h) - f(x)}{h}",
+      "name": "MIT",
       "url": "https://opensource.org/licenses/MIT"
     }
   },
