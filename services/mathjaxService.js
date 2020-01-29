@@ -21,9 +21,10 @@ function generateSvg(latex) {
       },
       data => {
         if (!data.errors) {
-          resolve(data.svg);
+          const svg = data.svg.replace(/"currentColor"/g, '"black"');
+          resolve(svg);
         } else {
-          reject(error);
+          reject(data.errors);
         }
       }
     );

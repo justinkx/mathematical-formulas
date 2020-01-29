@@ -10,6 +10,7 @@ const mathJax = require('../services/mathjaxService');
 router.get("/categories", getCategory);
 router.get("/topics/:categoryId", getTopics);
 router.get("/equations/:topicId", getEquations);
+router.get('/svg/',generateSvgFromLatex);
 
 function getCategory(req, res, next) {
   categoryService.getCategories()
@@ -59,5 +60,12 @@ function getEquations(req,res, next) {
   })
   .catch(error => next(error));
 }
-
+function generateSvgFromLatex(req,res,next) {
+  const latex = req.query.latex;
+  mathJax.generateSvg(latex)
+  .then((svg)=> {
+    res.json(svg)
+  })
+  .catch(error => next(error));
+}
 module.exports = router;
