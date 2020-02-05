@@ -48,5 +48,5 @@ mongoose.connect(
 
 app.listen(process.env.PORT || port, () =>{
   console.log(`Example app listening on port ${port},${process.env.NODE_ENV}!`);
-  wakeUpHeroku(25);
+  // wakeUpHeroku(25);
 });
